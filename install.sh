@@ -1,6 +1,4 @@
 # /bin/bash
-#
-# check if os is linux
 
 INSTALL_PATH="dist/reactify"
 USER_BIN_FOLDER="$HOME/.local/bin/"
