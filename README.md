@@ -11,7 +11,7 @@ chmod +x install.sh
 ```
 
 ## Usage
-```sh
+```
 reactify [-h] -i INPUT -o OUTPUT [-p]
 Replace hyphens with camelCase in an SVG file.
 
