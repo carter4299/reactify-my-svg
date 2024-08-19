@@ -1,0 +1,8 @@
+test.svg
+build
+dist
+*.spec
+*.ts
+*.tsx
+*.js
+*.jsx
