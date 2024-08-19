@@ -9,6 +9,10 @@ cd reactify-my-svg
 chmod +x install.sh
 ./install.sh
 ```
+or
+```sh
+git clone https://github.com/carter4299/reactify-my-svg.git && cd reactify-my-svg && chmod +x install.sh && ./install.sh
+```
 
 ## Usage
 ```
