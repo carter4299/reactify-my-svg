@@ -3,17 +3,6 @@
 INSTALL_PATH="dist/reactify"
 USER_BIN_FOLDER="$HOME/.local/bin/"
 
-FISH_FUNC=$(cat <<'EOF'
-function reactify
-    if test -n "$argv"
-        ~/.local/bin/reactify $argv
-    else
-        ~/.local/bin/reactify -h
-    end
-end
-EOF
-)
-
 setup_venv() {
     echo "Creating tmp venv and installing pyinstaller"
     python3 -m venv tmp
@@ -42,7 +31,7 @@ set_path() {
     elif [ "$USER_SHELL" = "zsh" ]; then
         echo "export PATH=$USER_BIN_FOLDER:\$PATH" >> ~/.zshrc
     elif [ "$USER_SHELL" = "fish" ]; then
-        printf "%s\n" "$FISH_FUNC" >> ~/.config/fish/config.fish
+        echo "set -gx PATH $USER_BIN_FOLDER \$PATH" >> ~/.config/fish/config.fish
     else
         echo "Unknown shell: $USER_SHELL"
     fi
