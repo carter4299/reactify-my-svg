@@ -19,6 +19,20 @@ def process_svg_file(args):
     input_svg = args.input
     output_js = args.output
     props = args.props
+    if not output_js:
+        if props:
+            output_js = input_svg.replace('.svg', '.tsx')
+        output_js = input_svg.replace('.svg', '.js')
+
+    component_name = output_js.split("/")[-1].split(".")
+    extension = component_name[-1]
+    component_name = component_name[0]
+    print(f"Component name: {component_name}")
+    print(f"Extension: {extension}")
+    camel_case = re.sub(r'[^a-zA-Z0-9]', '', component_name).capitalize()
+    component_name = camel_case
+    print(f"Component name: {component_name}")
+
 
     if not os.path.exists(input_svg):
         print(f"Error: {input_svg} does not exist.")
@@ -37,7 +51,7 @@ def process_svg_file(args):
         print(f"Error: {e}")
         return
 
-    header = f"export function {output_js.split(".")[0]}() {"{"}\n\treturn (\n"
+    header = f"export function {component_name}() {"{"}\n\treturn (\n"
 
     updated_svg_content = replace_hyphenated_words(svg_content)
     updated_svg_content = [f"\t\t{line.strip()}" for line in updated_svg_content.split("\n") if line.strip()]
@@ -46,9 +60,9 @@ def process_svg_file(args):
         if output_js.endswith('.ts'):
             output_js = output_js.replace('.ts', '.tsx')
         if output_js.endswith(('.ts', '.tsx')):
-            header = f"export function {output_js.split(".")[0]}(props: any) {"{"}\n\treturn (\n"
+            header = f"export function {component_name}(props: any) {"{"}\n\treturn (\n"
         else:
-            header = f"export function {output_js.split(".")[0]}(props) {"{"}\n\treturn (\n"
+            header = f"export function {component_name}(props) {"{"}\n\treturn (\n"
         updated_svg_content[0] = insert_props(updated_svg_content[0])
 
     updated_svg_content = "\n".join(updated_svg_content)
@@ -65,7 +79,7 @@ def process_svg_file(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Replace hyphens with camelCase in an SVG file.")
     parser.add_argument('-i', '--input', type=str, required=True, help="Input SVG file")
-    parser.add_argument('-o', '--output', type=str, required=True, help="Output JS/TS file")
+    parser.add_argument('-o', '--output', type=str, required=False, help="Output JS/TS file")
     parser.add_argument('-p', '--props', action='store_true', help="Add props to the output file")
 
     args = parser.parse_args()

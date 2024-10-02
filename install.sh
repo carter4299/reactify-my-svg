@@ -23,7 +23,7 @@ setup_venv() {
 
 compile() {
     echo "Compiling reactify"
-    pyinstaller --onefile --noconsole --name=reactify reactify.py
+    pyinstaller --onefile --noconsole --name=reactify reactify.py --optimize=2
 }
 
 copy_bin() {
